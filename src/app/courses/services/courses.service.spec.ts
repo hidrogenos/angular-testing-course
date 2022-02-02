@@ -98,18 +98,19 @@ describe('CoursesService', () => {
       expect(lessons.length).toBe(3);
     });
 
-    const req = httpTestingController.expectOne(req => req.url === '/api/lessons');
+    const req = httpTestingController.expectOne(req => req.url == '/api/lessons');
     expect(req.request.method).toBe('GET');
     expect(req.request.params.get('courseId')).toBe('12');
     expect(req.request.params.get('filter')).toBe('');
     expect(req.request.params.get('sortOrder')).toBe('asc');
     expect(req.request.params.get('pageNumber')).toBe('0');
     expect(req.request.params.get('pageSize')).toBe('3');
-    req.flush(findLessonsForCourse(12).slice(0, 3));
+
+    req.flush({payload: findLessonsForCourse(12).splice(0,3)});
   });
 
   afterAll(() => {
     httpTestingController.verify();
-  })
+  });
 
 });
